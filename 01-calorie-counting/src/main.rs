@@ -41,11 +41,6 @@ fn parse_input(path: &str) -> Vec<Elf> {
     return elves;
 }
 
-fn print_result(x: &u32) -> Option<u32> {
-    println!("Max calories: {}", x);
-    Some(*x)
-}
-
 fn main() {
     let mut calories = parse_input("input.txt")
         .iter()
@@ -53,6 +48,7 @@ fn main() {
         .collect::<Vec<u32>>();
 
     calories.sort_by(|a, b| b.cmp(a));
+
     let result = calories.iter().take(3).fold(0, |acc, x| acc + x);
-    print_result(&result);
+    println!("Result: {}", result);
 }
