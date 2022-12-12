@@ -47,11 +47,12 @@ fn print_result(x: &u32) -> Option<u32> {
 }
 
 fn main() {
-    parse_input("input.txt")
+    let mut calories = parse_input("input.txt")
         .iter()
         .map(|e| e.calculate_calories())
-        .collect::<Vec<u32>>()
-        .iter()
-        .max()
-        .and_then(print_result);
+        .collect::<Vec<u32>>();
+
+    calories.sort_by(|a, b| b.cmp(a));
+    let result = calories.iter().take(3).fold(0, |acc, x| acc + x);
+    print_result(&result);
 }
