@@ -1,4 +1,5 @@
 use std::fs;
+use std::time;
 
 fn check_rucksack(left: &str, right: Vec<&str>) -> u32 {
     left.chars()
@@ -48,8 +49,11 @@ fn file_parser(path: &str) -> Vec<String> {
 }
 
 fn main() {
+    let time = time::Instant::now();
+
     let result = file_parser("input.txt");
 
-    println!("Result: {}", calculate_priority(result.clone()));
-    println!("Result: {}", calculate_group_badges(result));
+    println!("Day 03 Part One: {}", calculate_priority(result.clone()));
+    println!("Day 03 Part Two: {}", calculate_group_badges(result));
+    println!("Day 03 Time Time: {:?}", time.elapsed());
 }
