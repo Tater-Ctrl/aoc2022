@@ -22,35 +22,34 @@ fn file_parser(str: &str) -> Vec<Command> {
         .collect()
 }
 
-fn part_one(str: &str) -> usize {
-    let commands = file_parser(str);
-    let mut snake = Rope::new(2);
+fn part_one(commands: &Vec<Command>) -> usize {
+    let mut rope = Rope::new(2);
 
     for command in commands {
-        snake.move_rope(command.direction, command.steps);
+        rope.move_rope(command.direction, command.steps);
     }
 
-    snake.parts[1].locations.len()
+    rope.parts.last().unwrap().moves
 }
 
-fn part_two(str: &str) -> usize {
-    let commands = file_parser(str);
-    let mut snake = Rope::new(10);
+fn part_two(commands: &Vec<Command>) -> usize {
+    let mut rope = Rope::new(10);
 
     for command in commands {
-        snake.move_rope(command.direction, command.steps);
+        rope.move_rope(command.direction, command.steps);
     }
 
-    snake.parts.last().unwrap().locations.len()
+    rope.parts.last().unwrap().locations.len()
 }
 
 fn main() {
     let time = std::time::Instant::now();
-    let result = part_one("input.txt");
+    let commands = file_parser("input.txt");
+    let result = part_one(&commands);
     println!("Part one: {}", result);
     println!("Time: {}ms", time.elapsed().as_millis());
 
-    let result = part_two("input.txt");
+    let result = part_two(&commands);
     println!("Part two: {}", result);
     println!("Time: {}ms", time.elapsed().as_millis());
 }
@@ -58,10 +57,12 @@ fn main() {
 #[cfg(test)]
 #[test]
 fn test_part_one() {
-    assert_eq!(part_one("input.example.txt"), 13);
+    let commands = file_parser("input.example.txt");
+    assert_eq!(part_one(&commands), 13);
 }
 
 #[test]
 fn test_part_two() {
-    assert_eq!(part_two("input.example_two.txt"), 36);
+    let commands = file_parser("input.example.txt");
+    assert_eq!(part_two(&commands), 1);
 }
